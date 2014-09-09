@@ -1,7 +1,29 @@
 #bubbles{
 	position: relative;
+	-webkit-overflow-scrolling: touch;
 	z-index: 100;
+
+	text{
+		font-family: codelight, Helvetica;
+		font-size: 22px;
+		word-spacing: 4px;
+		letter-spacing: 2px;
+		display: none;
+	}
+
+	g:hover {
+		cursor: pointer;
+
+		text{
+			display: inline;
+		}
+		text.grouped{
+			display: none;
+		}
+	}
 }
-g:hover {
-	cursor: pointer;
+
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
 }

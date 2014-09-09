@@ -1,8 +1,16 @@
 iframe{
 	position: fixed;
-	height: 100%;
-	width: 85%;
-	right: 0;
+
+	height: 80%;
+	height: -webkit-calc(100% - 120px); /* Chrome 19 and above */
+    height:    -moz-calc(100% - 120px); /* Firefox 4 and above */
+    height:         calc(100% - 120px); /* IE 9 and above */
+
+	width: 100%;
+	top: 120px;
 	z-index: -100;
-	min-width: 620px;
+
+	background-position:center;
+	background-repeat: no-repeat;
+	background-size: 30%;
 }

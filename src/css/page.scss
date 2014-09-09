@@ -1,3 +1,18 @@
 body{
 	overflow: hidden;
+	min-width: 768px;
+}
+
+h2{
+	position: absolute;
+	top: 40px;
+	right: 35px;
+	font-size: 1.8em;
+	z-index: 101;
+	font-family: codebold, Helvetica;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
 }

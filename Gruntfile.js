@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-
+  //TODO - May not need handlebars
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),

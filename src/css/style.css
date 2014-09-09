@@ -1,25 +1,3 @@
-#bubbles {
-  position: relative;
-  z-index: 100;
-}
-
-g:hover {
-  cursor: pointer;
-}
-
-iframe {
-  position: fixed;
-  height: 100%;
-  width: 85%;
-  right: 0;
-  z-index: -100;
-  min-width: 620px;
-}
-
-body {
-  overflow: hidden;
-}
-
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -89,4 +67,67 @@ table {
   margin-left: -130px;
   margin-top: -35px;
   padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+  display: none;
+}
+#bubbles g:hover {
+  cursor: pointer;
+}
+#bubbles g:hover text {
+  display: inline;
+}
+#bubbles g:hover text.grouped {
+  display: none;
+}
+
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+h2 {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
 }
