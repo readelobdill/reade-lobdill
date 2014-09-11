@@ -1,4 +1,7 @@
-// TODO - github link
+// TODO - action prompts
+//      - more/less info content
+//      - small screen?
+//      - vclick
 
 (function(){
 
@@ -11,28 +14,32 @@
                 "class": "rbt",
                 "pic":"assets/pics/byrd.png",
                 "workURL": 'http://runningbyrdteacompany.com/',
-                "r": 60
+                "gitHubURL": 'https://github.com/readelobdill/runningByrdTeaCompany',
+                "r": 50
             },
             {
                 "name":"wherethefuckisreade.com",
                 "class": "where-is-reade",
                 "pic":"assets/pics/location-pin.png",
                 "workURL": 'http://wherethefuckisreade.com/',
-                "r": 60
+                "gitHubURL": 'https://github.com/readelobdill/wherethefuckisreade',
+                "r": 50
             },
             {
                 "name":"Graph Tool",
                 "class": "grapher",
                 "pic":"assets/pics/line.svg",
                 "workURL": 'grapher/grapher.html',
-                "r": 60
+                "r": 50
             },
             {
                 "name":"Resume",
                 "class": "resume",
                 "pic": "assets/pics/resume.svg",
                 "workURL": 'assets/resume.pdf',
-                "r": 60
+                "gitHubURL": 'https://github.com/readelobdill/',
+                "linkedInURL": 'http://au.linkedin.com/pub/reade-lobdill/20/890/798',
+                "r": 50
             },
             // Must keep main node on as last added to DOM
             // so it always appears on top.
@@ -41,7 +48,7 @@
                 "class": "reade",
                 "pic":"assets/pics/logo.png",
                 "fixed": true,
-                "r": 75,
+                "r": 60,
                 "x": $(window).width()/2, 
                 "y": $(window).height()/2
             }
@@ -54,6 +61,7 @@
         ];
 
     $(document).ready(function(){
+            console.log('SETUP');
         vis = d3.select("#bubbles").append("svg:svg")
             .attr("id", "canvas")
             .attr("width", $(window).width())
@@ -100,23 +108,41 @@
        
         nodes.append("text")
             .text(function(d) { return d.name; })
-            .attr("y", function(d){ return d.r + 10; })
-            .attr("x", function(d){ 
-                return - $(this).width()/2;
-            });
+            .attr("y", function(d){ return d.r + 15; })
+            .attr("x", function(d){
+                // must do boundingClientRect because firefox (and probably IE)
+                // has no idea what the width of an svg element is using $.width() 
+                return - this.getBoundingClientRect().width/2;
+            })
+            // kind of wonky but some clients need the element to be
+            // in the dom to get the width
+            .style('display', 'none');
             
 
-        $(window).on('resize', onWindowResize);
+        $(window).on('resize', _.debounce(onWindowResize, 100, true));
+        $('#more-tab').on('click', showHideMoreContent);
     });
     	
     var nodeClick = function(node){
         //dont do this on main node
         if(node.class === 'reade') return;
+        console.log('NODE CLICK');
 
         $('#iframe').css('background-image', "url('assets/pics/loading.gif')");
+        $('#bubbles').addClass('grouped');
         $('#work-title').text(node.name);
-        $('text').attr('class', 'grouped');
+
         $(window).off('resize');
+        $('.reade').one('mousedown.drag', restartForces);
+        $('#iframe').one('load', function(){
+            console.log('REMOVE LOADING IMAGE');
+            //load more content
+            $(this).css('background-image', '');
+            // $('#more-container').show();
+        });
+
+        if(node.gitHubURL) $('#github-link').attr('href', node.gitHubURL).show();
+        if(node.linkedInURL) $('#linkedin-link').attr('href', node.linkedInURL).show();
 
         force.stop();
 
@@ -124,7 +150,7 @@
             .duration(750)
             .attr('height', 120)
             .each('end', function(){
-                //don't lode iframe until animation finished
+                //don't load iframe until animation finished
                 $('#iframe').attr('src', node.workURL);
             });
 
@@ -145,30 +171,33 @@
             .attr("y1", function(d) { return 60; })
             .attr("x2", function(d) { return 400; })
             .attr("y2", function(d) { return 60; });
-
-        $('.reade').one('click mousedown.drag', restartForces);
-        $('#iframe').one('load', function(){
-            $(this).css('background-image', '');
-        });
     };
    
     var restartForces = function(){
-        $('#iframe').attr('src', '');
+        console.log('RESTART');
+        $('#iframe').attr('src', 'about:blank');
+
+        $('#more-content').empty();
+        $('#more-container').hide();
+        resetMoreContent();
+
+        $('.social-link').hide();
         $('#work-title').text(vis.select('.reade').data()[0].name);
-        $(window).on('resize', onWindowResize);
+        $(window).on('resize', _.debounce(onWindowResize, 500, true));
 
         d3.select("#canvas").transition()
             .duration(750)
             .attr('height', $(window).height())
             .each('end', function(d){
-                $('text').attr('class', '');
+                $('#bubbles').removeClass('grouped');
                 force.resume();
             });
 
         var midHeight =  $(window).height()/2,
             midWidth =  $(window).width()/2;
 
-        d3.selectAll(".node").transition()
+        d3.selectAll(".node")
+            .transition()
             .duration(750)
             .attr("transform", function(d) { 
                 return "translate(" + d.x + "," + d.y + ")"; 
@@ -184,19 +213,40 @@
     };
 
     var onWindowResize = function(){
+        console.log('RESIZE');
+
         var windowHeight = $(this).height();
         var windowWidth = $(this).width();
 
-        vis.attr("width", windowWidth)
+        //resize canvas
+        d3.select("#canvas").attr("width", windowWidth)
             .attr("height", windowHeight);
 
         //move center node
         force.nodes()[force.nodes().length - 1].px = windowWidth/2;
         force.nodes()[force.nodes().length - 1].py = windowHeight/2;
 
-        console.log('RESIZE');
+        force.start();
     };
-   
+
+    var showHideMoreContent = function(){
+        if($('#more-container').hasClass('closed')){
+            $('#more-container').addClass('open').removeClass('closed');
+            $('#more-tab').text('Less');
+
+
+        } else {
+            resetMoreContent();
+
+
+        }
+    };
+
+    var resetMoreContent = function(){
+        $('#more-container').removeClass('open').addClass('closed');
+        $('#more-tab').text('More');
+    };
+
 	var tick = function(){
 	  vis.selectAll(".link")
         .attr("x1", function(d) { return d.source.x; })

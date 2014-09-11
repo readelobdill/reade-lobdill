@@ -57,7 +57,7 @@ button{
     position: relative;
     overflow: hidden;
     width: 80%;
-    margin: 30px auto;
+    margin: 40px auto 0 auto;
     max-width: 720px;
     min-width: 650px;
     font-family: Helvetica;
@@ -444,7 +444,7 @@ button{
 
 button.save, button.edit{
     position: absolute;
-    top: 25px;
+    top: 40px;
     left: 15%;
     height: 30px;
     width: 70px;

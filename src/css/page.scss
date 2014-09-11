@@ -3,7 +3,7 @@ body{
 	min-width: 768px;
 }
 
-h2{
+#work-title{
 	position: absolute;
 	top: 40px;
 	right: 35px;
@@ -12,7 +12,39 @@ h2{
 	font-family: codebold, Helvetica;
 }
 
+.social-link{
+	display: none;
+	z-index: 101;
+	position: absolute;
+
+	top: 75px;
+
+	height: 30px;
+	width: 30px;
+
+	&#github-link{
+		right: 35px;
+		background: url('../assets/pics/github.png') center no-repeat;
+		background-size: 100%;
+	}
+	&#linkedin-link{
+		right: 85px;
+		background: url('../assets/pics/linkedin.png') center no-repeat;
+		background-size: 100%;
+	}
+}
+
+.grapher-box{
+	margin: 40px auto;
+}
+
 @font-face {
   font-family: codebold;
   src: url("../assets/fonts/codebold.otf");
+}
+
+
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
 }

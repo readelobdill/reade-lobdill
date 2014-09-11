@@ -8,22 +8,28 @@
 		font-size: 22px;
 		word-spacing: 4px;
 		letter-spacing: 2px;
-		display: none;
 	}
 
 	g:hover {
 		cursor: pointer;
 
-		text{
-			display: inline;
+		&.reade{
+			cursor: move; /* fallback if grab cursor is unsupported */
+		    cursor: grab;
+		    cursor: -moz-grab;
+		    cursor: -webkit-grab;			
 		}
-		text.grouped{
-			display: none;
+		text{
+			display: inline !important;
 		}
 	}
-}
 
-@font-face {
-  font-family: codelight;
-  src: url("../assets/fonts/codelight.otf");
+	&.grouped{
+		g:hover{
+			cursor: pointer;
+			text{
+				display: none !important;
+			}
+		}
+	}
 }

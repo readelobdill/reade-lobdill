@@ -60,24 +60,30 @@ table {
 		font-size: 22px;
 		word-spacing: 4px;
 		letter-spacing: 2px;
-		display: none;
 	}
 
 	g:hover {
 		cursor: pointer;
 
-		text{
-			display: inline;
+		&.reade{
+			cursor: move; /* fallback if grab cursor is unsupported */
+		    cursor: grab;
+		    cursor: -moz-grab;
+		    cursor: -webkit-grab;			
 		}
-		text.grouped{
-			display: none;
+		text{
+			display: inline !important;
 		}
 	}
-}
 
-@font-face {
-  font-family: codelight;
-  src: url("../assets/fonts/codelight.otf");
+	&.grouped{
+		g:hover{
+			cursor: pointer;
+			text{
+				display: none !important;
+			}
+		}
+	}
 }
 iframe{
 	position: fixed;
@@ -95,12 +101,65 @@ iframe{
 	background-repeat: no-repeat;
 	background-size: 30%;
 }
+#more-container{
+	-webkit-transition: max-height 1s; /* For Safari 3.1 to 6.0 */
+    transition: max-height 1s;
+	max-height: 0px;
+
+	display: none;
+	width: 100%;
+	position: absolute;
+	top: 120px;
+
+	border-bottom: 1px solid grey;
+	background: white;
+
+	&.open{
+		max-height: 10000px;
+
+		#more-content{
+			width: 75%;
+			min-height: 300px;
+			margin: 20px auto;
+			background: purple;
+			display: block;
+		}
+	}
+
+	&.closed{
+		max-height: 0px;
+		
+		#more-content{
+			display: none;
+		}
+	}
+
+	#more-tab{
+		position: absolute;
+		cursor: pointer;
+
+		bottom: -31px;
+		left: 45%;
+
+		width: 100px;
+		height: 30px;
+
+		border: 1px solid grey;
+		border-top: none;
+		background: white;
+
+		font-family: codelight, Helvetica;
+		font-size: 1.2em;
+		line-height: 30px;
+		text-align: center;
+	}
+}
 body{
 	overflow: hidden;
 	min-width: 768px;
 }
 
-h2{
+#work-title{
 	position: absolute;
 	top: 40px;
 	right: 35px;
@@ -109,7 +168,39 @@ h2{
 	font-family: codebold, Helvetica;
 }
 
+.social-link{
+	display: none;
+	z-index: 101;
+	position: absolute;
+
+	top: 75px;
+
+	height: 30px;
+	width: 30px;
+
+	&#github-link{
+		right: 35px;
+		background: url('../assets/pics/github.png') center no-repeat;
+		background-size: 100%;
+	}
+	&#linkedin-link{
+		right: 85px;
+		background: url('../assets/pics/linkedin.png') center no-repeat;
+		background-size: 100%;
+	}
+}
+
+.grapher-box{
+	margin: 40px auto;
+}
+
 @font-face {
   font-family: codebold;
   src: url("../assets/fonts/codebold.otf");
+}
+
+
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
 }

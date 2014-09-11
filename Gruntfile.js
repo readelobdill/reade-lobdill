@@ -50,20 +50,6 @@ module.exports = function(grunt) {
          dest: 'build/libs.js'
        }
      },
-     handlebars: {
-       compile: {
-        options: {
-          namespace: "Handlebars.templates",
-          processName: function(filePath) {
-              return filePath.replace(/^src\/templates\//, '').replace(/\.hbs$/, '');
-          }
-        },
-         files: {
-           "src/templates/compiled-templates.js": ["src/templates/*.hbs"],
-           "build/templates/compiled-templates.js": ["src/templates/*.hbs"]
-         }
-       }
-     },
     sass: {
       build: {
         options: {
@@ -94,10 +80,6 @@ module.exports = function(grunt) {
       html: {
         files: ['src/runningbyrd.html'],
         tasks: ['htmlmin'],
-      },
-      templates: {
-        files: ['templates/*.hbs'],
-        tasks: ['handlebars'],
       }
     }
   });
@@ -107,9 +89,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
-  grunt.loadNpmTasks('grunt-contrib-handlebars');
 
   // Default task(s).
-  grunt.registerTask('default', ['concat', 'htmlmin', 'uglify', 'sass', 'handlebars']);
+  grunt.registerTask('default', ['concat', 'htmlmin', 'uglify', 'sass']);
 
 };

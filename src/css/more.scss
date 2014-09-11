@@ -1,0 +1,53 @@
+#more-container{
+	-webkit-transition: max-height 1s; /* For Safari 3.1 to 6.0 */
+    transition: max-height 1s;
+	max-height: 0px;
+
+	display: none;
+	width: 100%;
+	position: absolute;
+	top: 120px;
+
+	border-bottom: 1px solid grey;
+	background: white;
+
+	&.open{
+		max-height: 10000px;
+
+		#more-content{
+			width: 75%;
+			min-height: 300px;
+			margin: 20px auto;
+			background: purple;
+			display: block;
+		}
+	}
+
+	&.closed{
+		max-height: 0px;
+		
+		#more-content{
+			display: none;
+		}
+	}
+
+	#more-tab{
+		position: absolute;
+		cursor: pointer;
+
+		bottom: -31px;
+		left: 45%;
+
+		width: 100px;
+		height: 30px;
+
+		border: 1px solid grey;
+		border-top: none;
+		background: white;
+
+		font-family: codelight, Helvetica;
+		font-size: 1.2em;
+		line-height: 30px;
+		text-align: center;
+	}
+}
