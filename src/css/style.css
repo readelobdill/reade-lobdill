@@ -73,6 +73,7 @@ table {
   position: relative;
   -webkit-overflow-scrolling: touch;
   z-index: 100;
+  height: 120px;
 }
 #bubbles text {
   font-family: codelight, Helvetica;
@@ -82,6 +83,10 @@ table {
 }
 #bubbles g:hover {
   cursor: pointer;
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
 }
 #bubbles g:hover.reade {
   cursor: move;
@@ -93,10 +98,22 @@ table {
 #bubbles g:hover text {
   display: inline !important;
 }
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
 #bubbles.grouped g:hover {
   cursor: pointer;
 }
 #bubbles.grouped g:hover text {
+  display: none !important;
+}
+#bubbles.transition g:hover text {
   display: none !important;
 }
 
@@ -136,7 +153,6 @@ iframe {
   width: 75%;
   min-height: 300px;
   margin: 20px auto;
-  background: purple;
   display: block;
 }
 #more-container.closed {
@@ -202,8 +218,1343 @@ body {
   font-family: codebold;
   src: url("../assets/fonts/codebold.otf");
 }
-
 @font-face {
   font-family: codelight;
   src: url("../assets/fonts/codelight.otf");
 }
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* for jQuery Mobile ui-loader element */
+.ui-loading .ui-loader {
+  display: block;
+}
+
+.ui-loader {
+  display: none;
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  left: 50%;
+  width: 200px;
+  margin-left: -130px;
+  margin-top: -35px;
+  padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+  height: 120px;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+}
+#bubbles g:hover {
+  cursor: pointer;
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles g:hover.reade {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#bubbles g:hover text {
+  display: inline !important;
+}
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles.grouped g:hover {
+  cursor: pointer;
+}
+#bubbles.grouped g:hover text {
+  display: none !important;
+}
+#bubbles.transition g:hover text {
+  display: none !important;
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+#more-container {
+  -webkit-transition: max-height 1s;
+  /* For Safari 3.1 to 6.0 */
+  transition: max-height 1s;
+  max-height: 0px;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  border-bottom: 1px solid grey;
+  background: white;
+}
+#more-container.open {
+  max-height: 10000px;
+}
+#more-container.open #more-content {
+  width: 75%;
+  min-height: 300px;
+  margin: 20px auto;
+  display: block;
+}
+#more-container.closed {
+  max-height: 0px;
+}
+#more-container.closed #more-content {
+  display: none;
+}
+#more-container #more-tab {
+  position: absolute;
+  cursor: pointer;
+  bottom: -31px;
+  left: 45%;
+  width: 100px;
+  height: 30px;
+  border: 1px solid grey;
+  border-top: none;
+  background: white;
+  font-family: codelight, Helvetica;
+  font-size: 1.2em;
+  line-height: 30px;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+#work-title {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+.social-link {
+  display: none;
+  z-index: 101;
+  position: absolute;
+  top: 75px;
+  height: 30px;
+  width: 30px;
+}
+.social-link#github-link {
+  right: 35px;
+  background: url("../assets/pics/github.png") center no-repeat;
+  background-size: 100%;
+}
+.social-link#linkedin-link {
+  right: 85px;
+  background: url("../assets/pics/linkedin.png") center no-repeat;
+  background-size: 100%;
+}
+
+.grapher-box {
+  margin: 40px auto;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
+}
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* for jQuery Mobile ui-loader element */
+.ui-loading .ui-loader {
+  display: block;
+}
+
+.ui-loader {
+  display: none;
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  left: 50%;
+  width: 200px;
+  margin-left: -130px;
+  margin-top: -35px;
+  padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+  height: 120px;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+}
+#bubbles g:hover {
+  cursor: pointer;
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles g:hover.reade {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#bubbles g:hover text {
+  display: inline !important;
+}
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles.grouped g:hover {
+  cursor: pointer;
+}
+#bubbles.grouped g:hover text {
+  display: none !important;
+}
+#bubbles.transition text {
+  display: none !important;
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+#more-container {
+  -webkit-transition: max-height 1s;
+  /* For Safari 3.1 to 6.0 */
+  transition: max-height 1s;
+  max-height: 0px;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  border-bottom: 1px solid grey;
+  background: white;
+}
+#more-container.open {
+  max-height: 10000px;
+}
+#more-container.open #more-content {
+  width: 75%;
+  min-height: 300px;
+  margin: 20px auto;
+  display: block;
+}
+#more-container.closed {
+  max-height: 0px;
+}
+#more-container.closed #more-content {
+  display: none;
+}
+#more-container #more-tab {
+  position: absolute;
+  cursor: pointer;
+  bottom: -31px;
+  left: 45%;
+  width: 100px;
+  height: 30px;
+  border: 1px solid grey;
+  border-top: none;
+  background: white;
+  font-family: codelight, Helvetica;
+  font-size: 1.2em;
+  line-height: 30px;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+#work-title {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+.social-link {
+  display: none;
+  z-index: 101;
+  position: absolute;
+  top: 75px;
+  height: 30px;
+  width: 30px;
+}
+.social-link#github-link {
+  right: 35px;
+  background: url("../assets/pics/github.png") center no-repeat;
+  background-size: 100%;
+}
+.social-link#linkedin-link {
+  right: 85px;
+  background: url("../assets/pics/linkedin.png") center no-repeat;
+  background-size: 100%;
+}
+
+.grapher-box {
+  margin: 40px auto;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
+}
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* for jQuery Mobile ui-loader element */
+.ui-loading .ui-loader {
+  display: block;
+}
+
+.ui-loader {
+  display: none;
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  left: 50%;
+  width: 200px;
+  margin-left: -130px;
+  margin-top: -35px;
+  padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+  height: 120px;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+}
+#bubbles g:hover {
+  cursor: pointer;
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles g:hover.reade {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#bubbles g:hover text {
+  display: inline !important;
+}
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles.grouped g:hover {
+  cursor: pointer;
+}
+#bubbles.grouped g:hover text {
+  display: none !important;
+}
+#bubbles.transition text {
+  display: none !important;
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+#more-container {
+  -webkit-transition: max-height 1s;
+  /* For Safari 3.1 to 6.0 */
+  transition: max-height 1s;
+  max-height: 0px;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  border-bottom: 1px solid grey;
+  background: white;
+}
+#more-container.open {
+  max-height: 10000px;
+}
+#more-container.open #more-content {
+  width: 75%;
+  min-height: 300px;
+  margin: 20px auto;
+  display: block;
+}
+#more-container.closed {
+  max-height: 0px;
+}
+#more-container.closed #more-content {
+  display: none;
+}
+#more-container #more-tab {
+  position: absolute;
+  cursor: pointer;
+  bottom: -31px;
+  left: 45%;
+  width: 100px;
+  height: 30px;
+  border: 1px solid grey;
+  border-top: none;
+  background: white;
+  font-family: codelight, Helvetica;
+  font-size: 1.2em;
+  line-height: 30px;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+#work-title {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+.social-link {
+  display: none;
+  z-index: 101;
+  position: absolute;
+  top: 75px;
+  height: 30px;
+  width: 30px;
+}
+.social-link#github-link {
+  right: 35px;
+  background: url("../assets/pics/github.png") center no-repeat;
+  background-size: 100%;
+}
+.social-link#linkedin-link {
+  right: 85px;
+  background: url("../assets/pics/linkedin.png") center no-repeat;
+  background-size: 100%;
+}
+
+.grapher-box {
+  margin: 40px auto;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
+}
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* for jQuery Mobile ui-loader element */
+.ui-loading .ui-loader {
+  display: block;
+}
+
+.ui-loader {
+  display: none;
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  left: 50%;
+  width: 200px;
+  margin-left: -130px;
+  margin-top: -35px;
+  padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+  height: 120px;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+}
+#bubbles g:hover {
+  cursor: pointer;
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles g:hover.reade {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#bubbles g:hover text {
+  display: inline !important;
+}
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  /*		//SHADOW
+  		ellipse{
+  			display: none;
+  		}*/
+}
+#bubbles.grouped g:hover {
+  cursor: pointer;
+}
+#bubbles.grouped g:hover text {
+  display: none !important;
+}
+#bubbles.transition text {
+  display: none !important;
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+#more-container {
+  -webkit-transition: max-height 1s;
+  /* For Safari 3.1 to 6.0 */
+  transition: max-height 1s;
+  max-height: 0px;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  border-bottom: 1px solid grey;
+  background: white;
+}
+#more-container.open {
+  max-height: 10000px;
+}
+#more-container.open #more-content {
+  width: 75%;
+  min-height: 300px;
+  margin: 20px auto;
+  display: block;
+}
+#more-container.closed {
+  max-height: 0px;
+}
+#more-container.closed #more-content {
+  display: none;
+}
+#more-container #more-tab {
+  position: absolute;
+  cursor: pointer;
+  bottom: -31px;
+  left: 45%;
+  width: 100px;
+  height: 30px;
+  border: 1px solid grey;
+  border-top: none;
+  background: white;
+  font-family: codelight, Helvetica;
+  font-size: 1.2em;
+  line-height: 30px;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+#work-title {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+.social-link {
+  display: none;
+  z-index: 101;
+  position: absolute;
+  top: 75px;
+  height: 30px;
+  width: 30px;
+}
+.social-link#github-link {
+  right: 35px;
+  background: url("../assets/pics/github.png") center no-repeat;
+  background-size: 100%;
+}
+.social-link#linkedin-link {
+  right: 85px;
+  background: url("../assets/pics/linkedin.png") center no-repeat;
+  background-size: 100%;
+}
+
+.grapher-box {
+  margin: 40px auto;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
+}
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* for jQuery Mobile ui-loader element */
+.ui-loading .ui-loader {
+  display: block;
+}
+
+.ui-loader {
+  display: none;
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  left: 50%;
+  width: 200px;
+  margin-left: -130px;
+  margin-top: -35px;
+  padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+  height: 120px;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+}
+#bubbles g:hover {
+  cursor: pointer;
+}
+#bubbles g:hover.reade {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#bubbles g:hover text {
+  display: inline !important;
+}
+#bubbles g:hover ellipse {
+  display: none;
+}
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+}
+#bubbles.grouped ellipse {
+  display: none;
+}
+#bubbles.grouped g:hover {
+  cursor: pointer;
+}
+#bubbles.transition text {
+  display: none !important;
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+#more-container {
+  -webkit-transition: max-height 1s;
+  /* For Safari 3.1 to 6.0 */
+  transition: max-height 1s;
+  max-height: 0px;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  border-bottom: 1px solid grey;
+  background: white;
+}
+#more-container.open {
+  max-height: 10000px;
+}
+#more-container.open #more-content {
+  width: 75%;
+  min-height: 300px;
+  margin: 20px auto;
+  display: block;
+}
+#more-container.closed {
+  max-height: 0px;
+}
+#more-container.closed #more-content {
+  display: none;
+}
+#more-container #more-tab {
+  position: absolute;
+  cursor: pointer;
+  bottom: -31px;
+  left: 45%;
+  width: 100px;
+  height: 30px;
+  border: 1px solid grey;
+  border-top: none;
+  background: white;
+  font-family: codelight, Helvetica;
+  font-size: 1.2em;
+  line-height: 30px;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+#work-title {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+.social-link {
+  display: none;
+  z-index: 101;
+  position: absolute;
+  top: 75px;
+  height: 30px;
+  width: 30px;
+}
+.social-link#github-link {
+  right: 35px;
+  background: url("../assets/pics/github.png") center no-repeat;
+  background-size: 100%;
+}
+.social-link#linkedin-link {
+  right: 85px;
+  background: url("../assets/pics/linkedin.png") center no-repeat;
+  background-size: 100%;
+}
+
+.grapher-box {
+  margin: 40px auto;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
+}
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* for jQuery Mobile ui-loader element */
+.ui-loading .ui-loader {
+  display: block;
+}
+
+.ui-loader {
+  display: none;
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  left: 50%;
+  width: 200px;
+  margin-left: -130px;
+  margin-top: -35px;
+  padding: 10px 30px;
+}
+
+#bubbles {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100;
+  height: 120px;
+}
+#bubbles text {
+  font-family: codelight, Helvetica;
+  font-size: 22px;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+}
+#bubbles g:hover {
+  cursor: pointer;
+}
+#bubbles g:hover.reade {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#bubbles g:hover text {
+  display: inline !important;
+}
+#bubbles g:hover ellipse {
+  display: none;
+}
+#bubbles.grouped {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.75);
+}
+#bubbles.grouped ellipse {
+  display: none;
+}
+#bubbles.grouped g:hover {
+  cursor: pointer;
+}
+#bubbles.transition text {
+  display: none !important;
+}
+
+iframe {
+  position: fixed;
+  height: 80%;
+  height: -webkit-calc(100% - 120px);
+  /* Chrome 19 and above */
+  height: -moz-calc(100% - 120px);
+  /* Firefox 4 and above */
+  height: calc(100% - 120px);
+  /* IE 9 and above */
+  width: 100%;
+  top: 120px;
+  z-index: -100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+#more-container {
+  -webkit-transition: max-height 1s;
+  /* For Safari 3.1 to 6.0 */
+  transition: max-height 1s;
+  max-height: 0px;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  border-bottom: 1px solid grey;
+  background: white;
+}
+#more-container.open {
+  max-height: 10000px;
+}
+#more-container.open #more-content {
+  width: 75%;
+  min-height: 300px;
+  margin: 20px auto;
+  display: block;
+}
+#more-container.closed {
+  max-height: 0px;
+}
+#more-container.closed #more-content {
+  display: none;
+}
+#more-container #more-tab {
+  position: absolute;
+  cursor: pointer;
+  bottom: -31px;
+  left: 45%;
+  width: 100px;
+  height: 30px;
+  border: 1px solid grey;
+  border-top: none;
+  background: white;
+  font-family: codelight, Helvetica;
+  font-size: 1.2em;
+  line-height: 30px;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  min-width: 768px;
+}
+
+#work-title {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  font-size: 1.8em;
+  z-index: 101;
+  font-family: codebold, Helvetica;
+}
+
+.social-link {
+  display: none;
+  z-index: 101;
+  position: absolute;
+  top: 75px;
+  height: 30px;
+  width: 30px;
+}
+.social-link#github-link {
+  right: 35px;
+  background: url("../assets/pics/github.png") center no-repeat;
+  background-size: 100%;
+}
+.social-link#linkedin-link {
+  right: 85px;
+  background: url("../assets/pics/linkedin.png") center no-repeat;
+  background-size: 100%;
+}
+
+.grapher-box {
+  margin: 40px auto;
+}
+
+@font-face {
+  font-family: codebold;
+  src: url("../assets/fonts/codebold.otf");
+}
+@font-face {
+  font-family: codelight;
+  src: url("../assets/fonts/codelight.otf");
+}
+
+/*# sourceMappingURL=style.css.map */

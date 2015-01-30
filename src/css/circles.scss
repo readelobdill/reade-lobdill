@@ -2,6 +2,7 @@
 	position: relative;
 	-webkit-overflow-scrolling: touch;
 	z-index: 100;
+	height: 120px;
 
 	text{
 		font-family: codelight, Helvetica;
@@ -17,16 +18,37 @@
 			cursor: move; /* fallback if grab cursor is unsupported */
 		    cursor: grab;
 		    cursor: -moz-grab;
-		    cursor: -webkit-grab;			
+		    cursor: -webkit-grab;	
 		}
 		text{
 			display: inline !important;
 		}
+/*		//SHADOW
+		ellipse{
+			display: none;
+		}*/
 	}
 
 	&.grouped{
+		-webkit-box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.75);
+		-moz-box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.75);
+		box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.75);
+
+/*		//SHADOW
+		ellipse{
+			display: none;
+		}*/
+
 		g:hover{
 			cursor: pointer;
+			text{
+				display: none !important;
+			}
+		}
+	}
+
+	&.transition{
+		g:hover{
 			text{
 				display: none !important;
 			}

@@ -1,20 +1,12 @@
 module.exports = function(grunt) {
-  //TODO - May not need handlebars
-  // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-       build: {
-         src: [
-           'src/css/*.scss',
-         ],
-         dest: 'build/css/build.css',
-       },
        srcCSS: {
          src: [
            'src/css/*.scss',
          ],
-         dest: 'src/css/build.css',
+         dest: 'src/css/style.scss',
        },
        scriptsJS: {
          src: [
@@ -56,7 +48,7 @@ module.exports = function(grunt) {
           style: 'compressed'
         },
         files: {
-          'build/css/style.css': 'build/css/build.css'
+          'build/css/style.css': 'src/css/style.scss'
         }
       },
       src: {
@@ -64,22 +56,18 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'src/css/style.css': 'src/css/build.css'
+          'src/css/style.css': 'src/css/style.scss'
         }
       }
     },
     watch: {
       js: {
         files: ['src/scripts/*.js'],
-        tasks: ['concat'],
+        tasks: ['concat:libsJS', 'concat:scriptsJS'],
       },
       css: {
         files: ['src/css/*.scss'],
-        tasks: ['concat', 'sass'],
-      },
-      html: {
-        files: ['src/runningbyrd.html'],
-        tasks: ['htmlmin'],
+        tasks: ['concat:srcCSS', 'sass:src'],
       }
     }
   });

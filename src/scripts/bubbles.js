@@ -33,6 +33,13 @@
                 "r": 50
             },
             {
+                "name":"Globetrotting",
+                "class": "globe",
+                "pic":"assets/pics/globe.svg",
+                "workURL": '//player.vimeo.com/video/105926330?portrait=0',
+                "r": 50
+            },
+            {
                 "name":"Resume",
                 "class": "resume",
                 "pic": "assets/pics/resume.svg",
@@ -41,8 +48,17 @@
                 "linkedInURL": 'http://au.linkedin.com/pub/reade-lobdill/20/890/798',
                 "r": 50
             },
+            {
+                "name":"Rivertop Infographic",
+                "class": "rivertop",
+                "pic": "assets/pics/rivertop.svg",
+                "workURL": 'rivertop-infographic/index.html',
+                "gitHubURL": 'https://github.com/readelobdill/rivertop-infographic',
+                "r": 50
+            },
             // Must keep main node on as last added to DOM
-            // so it always appears on top.
+            // so it always appears on top. svg objects respect
+            // the DOM order instead of z-index
             {
                 "name":"Reade Lobdill Design",
                 "class": "reade",
@@ -54,14 +70,15 @@
             }
         ],
         linkData = [
-            {"source": 4, "target": 0},
-            {"source": 4, "target": 1},
-            {"source": 4, "target": 2},
-            {"source": 4, "target": 3}
+            {"source": 6, "target": 0},
+            {"source": 6, "target": 1},
+            {"source": 6, "target": 2},
+            {"source": 6, "target": 3},
+            {"source": 6, "target": 4},
+            {"source": 6, "target": 5}
         ];
 
     $(document).ready(function(){
-            console.log('SETUP');
         vis = d3.select("#bubbles").append("svg:svg")
             .attr("id", "canvas")
             .attr("width", $(window).width())
@@ -97,6 +114,14 @@
         nodes.append("svg:circle")
             .style("fill", "white")
             .attr("r", function(d) { return d.r; });
+
+        // SHADOWS
+        // nodes.append("svg:ellipse")
+        //     .style("fill", "black")
+        //     .style("fill-opacity", "0.3")
+        //     .attr("rx", function(d) { return d.r/1.5; })
+        //     .attr("ry", function(d) { return d.r/5; })
+        //     .attr("cy", function(d) { return d.r*1.25; });
          
         nodes.append("image")
             .attr("xlink:href", function(d) { return d.pic })
@@ -126,19 +151,17 @@
     var nodeClick = function(node){
         //dont do this on main node
         if(node.class === 'reade') return;
-        console.log('NODE CLICK');
+        $('#bubbles').addClass('transition');
 
         $('#iframe').css('background-image', "url('assets/pics/loading.gif')");
-        $('#bubbles').addClass('grouped');
         $('#work-title').text(node.name);
 
         $(window).off('resize');
         $('.reade').one('mousedown.drag', restartForces);
         $('#iframe').one('load', function(){
-            console.log('REMOVE LOADING IMAGE');
             //load more content
             $(this).css('background-image', '');
-            // $('#more-container').show();
+            $('#more-container').show();
         });
 
         if(node.gitHubURL) $('#github-link').attr('href', node.gitHubURL).show();
@@ -151,6 +174,7 @@
             .attr('height', 120)
             .each('end', function(){
                 //don't load iframe until animation finished
+                $('#bubbles').addClass('grouped').removeClass('transition');
                 $('#iframe').attr('src', node.workURL);
             });
 
@@ -174,8 +198,8 @@
     };
    
     var restartForces = function(){
-        console.log('RESTART');
         $('#iframe').attr('src', 'about:blank');
+        $('#bubbles').removeClass('grouped').addClass('transition');
 
         $('#more-content').empty();
         $('#more-container').hide();
@@ -189,7 +213,7 @@
             .duration(750)
             .attr('height', $(window).height())
             .each('end', function(d){
-                $('#bubbles').removeClass('grouped');
+                $('#bubbles').removeClass('transition');
                 force.resume();
             });
 
@@ -213,8 +237,6 @@
     };
 
     var onWindowResize = function(){
-        console.log('RESIZE');
-
         var windowHeight = $(this).height();
         var windowWidth = $(this).width();
 
@@ -234,7 +256,8 @@
             $('#more-container').addClass('open').removeClass('closed');
             $('#more-tab').text('Less');
 
-
+            //Add Text explanation (from node?)
+            $('#more-content').text('').wrapInner('<p></p>');
         } else {
             resetMoreContent();
 
