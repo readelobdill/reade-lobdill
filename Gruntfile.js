@@ -6,7 +6,7 @@ module.exports = function(grunt) {
          src: [
            'src/css/*.scss',
          ],
-         dest: 'src/css/style.scss',
+         dest: 'src/css/style.css',
        },
        scriptsJS: {
          src: [
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
            collapseWhitespace: true
          },
          files: {                                   // Dictionary of files
-           'build/readelobdill.html': 'src/readelobdill.html'
+           'build/index.html': 'src/index.html'
          }
        }
      },
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
           style: 'compressed'
         },
         files: {
-          'build/css/style.css': 'src/css/style.scss'
+          'build/css/style.css': 'src/css/style.css'
         }
       },
       src: {
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'src/css/style.css': 'src/css/style.scss'
+          'src/css/style.css': 'src/css/style.css'
         }
       }
     },
