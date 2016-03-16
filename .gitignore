@@ -1,5 +1,6 @@
 src/scripts.js
 src/libs.js
+src/css/style.css
 build
 .sass-cache
 node_modules
