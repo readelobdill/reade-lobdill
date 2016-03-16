@@ -1,0 +1,180 @@
+body{
+	background: rgb(235,235,235);
+}
+#roi-calculator-container{
+	width: 100%;
+	max-width: 400px;
+	min-width: 250px;
+	margin: 0 auto;
+	padding: 20px;
+	font-family: Helvetica;
+	border: 2px solid rgb(233, 88, 8);
+	background: white;
+	color: #55565a;
+}
+
+#roi-calculator-container h3{
+	margin: 0;
+}	
+
+#roi-calculator{
+	padding: 20px 0;
+	width: 100%;
+}
+
+#roi-calculator input, #roi-calculator select{
+	width: 100%;
+	height: 22px;
+	margin-bottom: 15px;
+	text-align: right;
+	font-size: 18px;
+	color: #55565a;
+	margin-top: 5px;
+	padding: 3px 0px;
+}
+
+#roi-calculator select{
+	height: 35px;
+	background: white;
+}
+
+#roi-calculator-container button{
+	height: 35px;
+	border-radius: 0;
+	background: rgb(206,206,206);
+	border: none;
+	font-size: 16px;
+	padding: 3px 15px;
+	cursor: pointer;
+	color: #55565a;
+}
+
+#roi-calculate-button{
+	float: right;
+	margin-bottom: 25px;
+}
+
+#roi-results-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 25px;
+	width: 100%;
+	padding-bottom: 10px;
+	text-align: left;
+}
+
+#roi-results-table tr td{
+	border: 1px solid grey;
+	padding: 6px;
+}
+
+#roi-results-table tr td.savings-name{
+	text-align: right;
+}
+
+#roi-results-table .combined-savings{
+	font-weight: bold;
+}
+
+#roi-show-download-modal{
+	color: black;
+	margin-left: 4px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.roi-full-report{
+	display: none;
+	text-align: center;
+}
+
+#roi-download-modal-backdrop{
+	display: none;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgba(85,86,90, 0.6);
+	top: 0;
+	left: 0;
+	z-index: 100000;
+}
+
+#roi-download-modal{
+	position: fixed;
+	height: 457px;
+	width: 600px;
+	top: calc(40% - (457px/2));
+	left: calc(50% - 300px);
+	background: white;
+	z-index: 100001;
+}
+
+#roi-download-modal .text-content{
+	padding: 10px;
+	width: 75%;
+	float: right;
+}
+
+
+#roi-download-modal #document-logo{
+	width: 10%;
+	float: left;
+	background: url('document-logo.png') center;
+	background-size: 100%;
+	height: 80px;
+	margin-left: 40px;
+	margin-top: 30px;
+}
+
+#roi-download-modal h4{
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+#roi-download-modal p{
+	font-size: 14px;
+}
+
+#roi-download-modal ul{
+	padding-left: 15px;
+}
+
+#roi-download-modal ul li{
+	font-size: 14px;
+}
+
+#roi-download-modal form, #roi-download-modal .enter-info-prompt{
+	text-align: center;
+	padding: 0 10px;
+	clear: both;
+}
+
+#roi-download-modal form{
+	margin-bottom: 20px;
+}
+
+#roi-download-modal form input{
+	float: left;
+	width: 210px;
+	margin-left: 40px; 
+	margin-bottom: 10px;
+	height: 20px;
+	font-size: 14px;
+}
+
+#roi-pdf-download{
+}
+
+#roi-download-modal-footer {
+	background: grey;
+	height: 30px;
+	width: 580px;
+	padding: 10px;
+}
+
+#roi-download-modal-footer div{
+	height: 30px;
+	line-height: 30px;
+	color: white;
+	text-align: center;
+}

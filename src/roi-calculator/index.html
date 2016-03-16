@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/roi-calculator.css">
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/lodash.js"></script>
+    <script src="libs/jsPDF.js"></script>
+    <script src="libs/flot.js"></script>
+    <script src="libs/flot.canvas.js"></script>
+    <script src="js/roi-calculator.js"></script>
+</head>
+<body>
+    <div id="roi-calculator-container">
+        <h3>Corrosion Reduction Calculator</h3>
+    	<form id="roi-calculator">
+            <label name="stateSelector">State evaluating cost benefit:</label>
+            <select id="stateSelector" name="stateSelector" value="Montana"></select>
+
+            <label name="numberSnowplows">Number of snowplows in fleet: <em>exposed to salt brine (23% NaCl)</em></label>
+            <input name="numberSnowplows" type="number" value="900" min="0" max="2000" step="any" required/>
+
+            <label name="additionalVehicles">Additional maintenance vehicles exposed to brine:</label>
+            <input name="additionalVehicles" type="number" value="109" min="0" step="any" required/>
+
+            <label name="brineMakingFacilities">Number of brine making facilities:</label>
+            <input name="brineMakingFacilities" type="number" value="100" min="0" step="any" required/>
+
+	    	<label name="annualBrineGallons">Average annual useage of brine <em>(gallons)</em>:</label>
+	    	<input name="annualBrineGallons" type="number" value="18000000" step="any" required/>
+
+            <label name="brineApplicationRate">Brine application rate <em>(gallons per lane mile)</em>:</label>
+            <input name="brineApplicationRate" type="number" value="20" min="0" step="any" required/>
+
+            <label name="aggregateLandMiles">Lane miles treated with brine once or more per year:</label>
+            <input name="aggregateLandMiles" type="number" value="50000" min="0" step="any" required/>
+
+            <label name="brineGallonCost">Cost per Gallon of brine:</label>
+            <input name="brineGallonCost" type="number" value="0.21" min="0" step="0.01" required/>
+
+	    	<button id="roi-calculate-button">CALCULATE</button>
+    	</form>
+
+        <table id="roi-results-table">
+            <th>ANNUALIZED SAVINGS</th>
+            <tr>
+                <td></td>
+                <td>Yearly Savings</td>
+            </tr>
+            <tr>
+                <td class="savings-name">Direct Savings</td>
+                <td class="direct-savings-value">$</td>
+            </tr>
+            <tr>
+                <td class="savings-name">Inirect Savings</td>
+                <td class="indirect-savings-value">$</td>
+            </tr>
+            <tr class="combined-savings">
+                <td class="savings-name">Combined Savings</td>
+                <td class="combined-savings-value">$</td>
+            </tr>
+        </table>
+        <span class="roi-full-report">To download full report<span id="roi-show-download-modal">click here.</span></span>
+        <div id="roi-download-modal-backdrop">
+            <div id="roi-download-modal">
+                <div>
+                    <div id="document-logo"></div>
+                    <div class="text-content">
+                        <h4>RIVERTOP RENEWABLES</h4>
+                        <h3>CORROSION INHBITOR SAVINGS CALCULATOR</h3>
+                        <p>
+                            This calculator is designed to project the costs and savings
+                            adding <em>Headwaters®</em> Corrosion Inhibitor to salt brine for state 
+                            winter road maintenence. This calculator was developed by Rivertop
+                            Renewables using the latest research, case studies and government agency data.
+                        </p>
+                        <p>Included in your PDF report will be:</p>
+                        <ul>
+                            <li>Annualized Savings & Costs</li>
+                            <li>Payback Analysis</li>
+                            <li>5 Year ROI Analysis</li>
+                        </ul>
+                    </div>
+                    <p class="enter-info-prompt">Enter your information below, and your PDF report will be downloaded to your computer:</p>
+                    <form id="roi-download-form">
+
+                        <input name="firstName" placeholder="First Name" required/>
+
+                        <input name="lastName" placeholder="Last Name" required/>
+
+                        <input name="company" placeholder="Company" required/>
+
+                        <input name="email" type="email" placeholder="Email" required/>
+
+                        <input name="phone" placeholder="Phone" required/>
+
+                        <button id="roi-pdf-download">Download</button>
+                    </form>
+                    <div id="roi-download-modal-footer">
+                        <div>
+                            <a href="http://www.rivertop.com/contact-us/">Contact</a>
+                            a <em>Headwaters®</em> Corrosion Inhibition Representative today!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

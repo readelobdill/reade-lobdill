@@ -1,0 +1,142 @@
+#technology-infomap{
+  width: 90%;
+  max-width: 1126px;
+  min-width: 700px;
+  margin: 0 auto 300px auto;
+  font: 11.5px rajdhani-bold, Helvetica, Arial, sans-serif;
+
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.node-text{
+  font-size: 12.6px;
+  fill: #FFFFFF;
+  text-align: center;
+  pointer-events:none;
+  line-height: 40px;
+}
+
+.section-text{
+  fill: #A6A8AB;
+  pointer-events:none;
+}
+
+.functionality-title{
+  fill: #A6A8AB;
+  letter-spacing: 2.5px;
+  text-anchor: middle;
+  pointer-events:none;
+}
+
+.tile-group{
+  cursor: pointer;
+}
+
+.tile-group.fade{
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+.tile-text{
+  font-size: 14px;
+  fill: #FFFFFF;
+  letter-spacing: 0px;
+  text-anchor: middle;
+  pointer-events:none;
+}
+
+.node-text span {
+  width: 75px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;      
+}
+
+.node-shape.blue{
+  fill: #002857;
+}
+
+.node-shape.grey{
+  fill: #939393;
+}
+
+.link {
+  stroke: #929497;
+  stroke-opacity: .4;
+  stroke-width: .9pt;
+  fill: none;
+  pointer-events: none;
+}
+
+.circle-marker.fade{
+  opacity: 0.3;
+}
+
+.functionality-line{
+  stroke-width: 1pt;
+  stroke: #A6A8AB;
+}
+.functionality-line-orange{
+  stroke-width: 1pt;
+  stroke: #FF6C0C;
+}
+.node-source .node-shape{
+  fill: #FF6B0B;
+  cursor: pointer;
+}
+
+.link-source{
+  stroke-opacity: .8;
+}
+
+.not-connected{
+  stroke-opacity: 0;
+}
+
+.tech-text-container {
+  font-family: rajdhani-regular, Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid #FF6C0C;
+  color: #454545;
+  font-size: 18px;
+}
+
+.technology-text-title{
+  color: #002857;
+  font-weight: bold;
+  font-size: 27px;
+  margin-bottom: 0;
+}
+
+.technology-text-renewable{
+  margin-top: 3px;
+}
+
+.tech-text-container a{
+  color: #FF6C0C;
+  text-decoration: none;
+}
+
+.chelation{fill:#9B7D5C !important;}
+.ph-modification{fill:#FF6C0C !important;}
+.dispertion{fill:#2FCF29 !important;}
+.absorption{fill:#0099CD !important;}
+.barrier{fill:#C2C2C2 !important;}
+.adhesion{fill:#454545 !important;}
+.permeation{fill:#D6BDA0 !important;}
+.adsorption{fill:#9476FF !important;}
+.flavor-modification{fill:#29CCCF !important;}
+.preservation{fill:#D9CA00 !important;}
+
+@font-face
+{
+  font-family: rajdhani-bold;
+  src: url('../fonts/Rajdhani-Bold.ttf');
+}
+
+@font-face
+{
+  font-family: rajdhani-regular;
+  src: url('../fonts/Rajdhani-Regular.ttf');
+}
