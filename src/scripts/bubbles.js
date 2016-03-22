@@ -8,22 +8,23 @@
     var vis,
         force,
         w = 1800,
+        $iframe,
         nodeData = [
             {
                 "name":"Runningbyrd Tea Company",
                 "class": "rbt",
-                "pic":"assets/pics/byrd.png",
+                "pic":"assets/pics/byrd.svg",
                 "workURL": 'http://runningbyrdteacompany.com/',
                 "gitHubURL": 'https://github.com/readelobdill/runningByrdTeaCompany',
-                "r": 50
+                "r": 60
             },
             {
                 "name":"wherethefuckisreade.com",
                 "class": "where-is-reade",
-                "pic":"assets/pics/location-pin.png",
+                "pic":"assets/pics/location-pin.svg",
                 "workURL": 'http://wherethefuckisreade.com/',
                 "gitHubURL": 'https://github.com/readelobdill/wherethefuckisreade',
-                "r": 50
+                "r": 60
             },
             {
                 "name":"Graph Tool",
@@ -37,7 +38,7 @@
                 "class": "globe",
                 "pic":"assets/pics/globe.svg",
                 "workURL": '//player.vimeo.com/video/105926330?portrait=0',
-                "r": 50
+                "r": 60
             },
             {
                 "name":"Resume",
@@ -46,7 +47,7 @@
                 "workURL": 'assets/resume.pdf',
                 "gitHubURL": 'https://github.com/readelobdill/',
                 "linkedInURL": 'http://au.linkedin.com/pub/reade-lobdill/20/890/798',
-                "r": 50
+                "r": 60
             },
             {
                 "name":"Rivertop Infographic",
@@ -54,7 +55,14 @@
                 "pic": "assets/pics/rivertop.svg",
                 "workURL": 'rivertop-infographic/index.html',
                 "gitHubURL": 'https://github.com/readelobdill/rivertop-infographic',
-                "r": 50
+                "r": 60
+            },
+            {
+                "name":"Coachseek",
+                "class": "coachseek",
+                "pic": "assets/pics/coachseek.svg",
+                "workURL": 'https://app-testing.coachseek.com/#/?showoff={"email":"russelsimmons@coachseek.com","password":"password"}',
+                "r": 60
             },
             // Must keep main node on as last added to DOM
             // so it always appears on top. svg objects respect
@@ -62,28 +70,42 @@
             {
                 "name":"Reade Lobdill Design",
                 "class": "reade",
-                "pic":"assets/pics/logo.png",
+                "pic":"assets/pics/logo.svg",
                 "fixed": true,
                 "r": 60,
-                "x": $(window).width()/2, 
+                "x": $(window).width()/2,
                 "y": $(window).height()/2
             }
         ],
         linkData = [
-            {"source": 6, "target": 0},
-            {"source": 6, "target": 1},
-            {"source": 6, "target": 2},
-            {"source": 6, "target": 3},
-            {"source": 6, "target": 4},
-            {"source": 6, "target": 5}
+            {"source": 7, "target": 0},
+            {"source": 7, "target": 1},
+            {"source": 7, "target": 2},
+            {"source": 7, "target": 3},
+            {"source": 7, "target": 4},
+            {"source": 7, "target": 5},
+            {"source": 7, "target": 6}
         ];
 
+    // setup routes
+    function onHashChange(newHash, oldHash){
+        if(newHash === "reade" && oldHash){
+            restartForces();
+        } else if (newHash && newHash !== "reade") {
+            showNodeDetails(d3.select('g.node.' + newHash).data()[0])
+        }
+    }
+
+    hasher.changed.add(onHashChange);
+    hasher.initialized.add(onHashChange);
+
     $(document).ready(function(){
+        $iframe = $("#iframe");
         vis = d3.select("#bubbles").append("svg:svg")
             .attr("id", "canvas")
             .attr("width", $(window).width())
             .attr("height", $(window).height());
-        
+
         force = d3.layout.force()
             .nodes(nodeData)
             .links(linkData)
@@ -102,67 +124,70 @@
             .style('stroke-width', '2px')
             .style("stroke", "black")
             .attr('class', 'link');
-                           
+
         var nodes = vis.selectAll(".node")
             .data(nodeData)
             .enter().append("g")
             .attr("class", function(d) { return "node " + d.class; })
             .on("click", nodeClick)
+            .each(function(d){
+                var self = this;
+                d3.xml(d.pic, "image/svg+xml", function(xml) {
+                    $(xml.documentElement).appendTo($(self)).addClass(d.class);
+                });
+            })
             .call(force.drag);
-              
-              
+
+
         nodes.append("svg:circle")
             .style("fill", "white")
             .attr("r", function(d) { return d.r; });
 
-        // SHADOWS
-        // nodes.append("svg:ellipse")
-        //     .style("fill", "black")
-        //     .style("fill-opacity", "0.3")
-        //     .attr("rx", function(d) { return d.r/1.5; })
-        //     .attr("ry", function(d) { return d.r/5; })
-        //     .attr("cy", function(d) { return d.r*1.25; });
-         
-        nodes.append("image")
-            .attr("xlink:href", function(d) { return d.pic })
-            .attr("x", function(d) { return -d.r/1.35; })
-            .attr("y", function(d) { return -d.r/1.35; })
-            .attr("width", function(d) { return d.r * 1.5; })
-            .attr("height", function(d) { return d.r * 1.5; });      
-       
-       
         nodes.append("text")
             .text(function(d) { return d.name; })
             .attr("y", function(d){ return d.r + 15; })
             .attr("x", function(d){
                 // must do boundingClientRect because firefox (and probably IE)
-                // has no idea what the width of an svg element is using $.width() 
+                // has no idea what the width of an svg element is using $.width()
+                //TODO these are wrong sometimes?
                 return - this.getBoundingClientRect().width/2;
             })
             // kind of wonky but some clients need the element to be
             // in the dom to get the width
             .style('display', 'none');
-            
+
 
         $(window).on('resize', _.debounce(onWindowResize, 100, true));
-        $('#more-tab').on('click', showHideMoreContent);
+        // $('#more-tab').on('click', showHideMoreContent);
+        hasher.init();
+        // showHideNodes();
     });
-    	
-    var nodeClick = function(node){
-        //dont do this on main node
-        if(node.class === 'reade') return;
+
+    function showHideNodes(){
+        // d3.selectAll('.node')
+        //     .transition()
+        //     .duration(0)
+        //     .attr("transform","translate(" + $(window).width()/2 + "," + $(window).height()/2 + ")")
+        //     .each('end', function(d){
+        //         force.start();
+        //     });
+    };
+
+    function nodeClick(node){
+        // hasher.changed.active = false; //disable changed signal
+        hasher.setHash(node.class);
+        // hasher.changed.active = true; //re-enable signal
+        if(node.class !== "reade" && !$('#bubbles').hasClass('grouped')) showNodeDetails(node)
+    };
+
+    function showNodeDetails(node){
         $('#bubbles').addClass('transition');
 
-        $('#iframe').css('background-image', "url('assets/pics/loading.gif')");
+        $iframe.css('background-image', "url('assets/pics/loading.gif')");
         $('#work-title').text(node.name);
 
         $(window).off('resize');
         $('.reade').one('mousedown.drag', restartForces);
-        $('#iframe').one('load', function(){
-            //load more content
-            $(this).css('background-image', '');
-            $('#more-container').show();
-        });
 
         if(node.gitHubURL) $('#github-link').attr('href', node.gitHubURL).show();
         if(node.linkedInURL) $('#linkedin-link').attr('href', node.linkedInURL).show();
@@ -175,10 +200,17 @@
             .each('end', function(){
                 //don't load iframe until animation finished
                 $('#bubbles').addClass('grouped').removeClass('transition');
-                $('#iframe').attr('src', node.workURL);
+                $iframe.remove();
+                $iframe.one('load', function(){
+                    $(this).css('background-image', '');
+                    //load more content
+                    // $('#more-container').show();
+                });
+                $iframe.attr('src', node.workURL);
+                $iframe.appendTo('body');
             });
 
-        d3.select(this)
+        d3.select('g.' + node.class)
             .transition()
             .duration(750)
             .attr("transform","translate(" + 400 + "," + 60 + ")");
@@ -195,9 +227,9 @@
             .attr("y1", function(d) { return 60; })
             .attr("x2", function(d) { return 400; })
             .attr("y2", function(d) { return 60; });
-    };
-   
-    var restartForces = function(){
+    }
+
+    function restartForces(){
         $('#iframe').attr('src', 'about:blank');
         $('#bubbles').removeClass('grouped').addClass('transition');
 
@@ -223,8 +255,8 @@
         d3.selectAll(".node")
             .transition()
             .duration(750)
-            .attr("transform", function(d) { 
-                return "translate(" + d.x + "," + d.y + ")"; 
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
             });
 
         d3.selectAll(".link")
@@ -236,7 +268,7 @@
             .attr("y2", function(d) { return d.target.y; });
     };
 
-    var onWindowResize = function(){
+    function onWindowResize(){
         var windowHeight = $(this).height();
         var windowWidth = $(this).width();
 
@@ -251,7 +283,7 @@
         force.start();
     };
 
-    var showHideMoreContent = function(){
+    function showHideMoreContent(){
         if($('#more-container').hasClass('closed')){
             $('#more-container').addClass('open').removeClass('closed');
             $('#more-tab').text('Less');
@@ -265,18 +297,18 @@
         }
     };
 
-    var resetMoreContent = function(){
+    function resetMoreContent(){
         $('#more-container').removeClass('open').addClass('closed');
         $('#more-tab').text('More');
     };
 
-	var tick = function(){
-	  vis.selectAll(".link")
+    function tick(){
+      vis.selectAll(".link")
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-      
+
         vis.selectAll(".node").attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-	};
+    };
 })();

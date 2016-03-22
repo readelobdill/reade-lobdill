@@ -71,6 +71,15 @@ module.exports = function(grunt) {
         files: ['src/css/*.scss'],
         tasks: ['concat:srcCSS', 'sass:src'],
       }
+    },
+    connect: {
+        src: {
+            options: {
+                port: 8000,
+                keepalive: true,
+                base: 'src'
+            }
+        }
     }
   });
 
@@ -79,6 +88,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task(s).
   grunt.registerTask('default', ['concat', 'htmlmin', 'uglify', 'sass']);

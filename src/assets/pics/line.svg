@@ -1,8 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="100.0px" height="100px" viewBox="0 0 121 121" version="1.1">
-    <title>chart_line_1</title>
-    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
-    <defs/>
-    <g id="Statistics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <path d="M105,108 L12,108 L12,106.5 L12,15 L12,15 L10,15 L13,10 L16,15 L14,15 L14,106 L105,106 L105,103.952637 L110,106.976318 L105,110 L105,108 L105,108 Z M20.4084051,99.9106456 C18.2212618,99.2615972 18,96.4309014 18,96.4309014 L32.4234837,55.3281725 C32.822036,54.1924145 36.0273191,53.4364372 37.2314083,54.1942066 L64.9970703,71.6679688 L99.2630319,25.061559 C99.2630319,25.061559 101.522121,23.1983039 103.448609,24.408831 C105.375097,25.6193582 104.963003,28.2292889 104.963003,28.2292889 L68.6096344,78.7046386 C68.0756937,79.445996 65.0445986,79.6941963 64.0629916,79.076939 C55.019208,73.389997 36.9316406,62.0161133 36.9316406,62.0161133 L24.4477321,98.3986518 C24.4477321,98.3986518 22.5955483,100.559694 20.4084051,99.9106456 Z M20.4084051,99.9106456" id="chart_line_1" fill="#000000" sketch:type="MSShapeGroup"/>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="-50px" y="-50px"
+	width="100px" height="100px" viewBox="0 0 100 100"
+	 style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<title>chart_line_1</title>
+<description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+<polygon points="83.8,88.5 11.5,88.5 11.5,87.3 11.5,16.2 11.5,16.2 9.9,16.2 12.3,12.4 14.6,16.2 13.1,16.2 13.1,86.9 83.8,86.9
+	83.8,85.3 87.6,87.6 83.8,90.1 83.8,88.5 "/>
+<path d="M18,82.3c-1.7-0.5-1.8-2.7-1.8-2.7l11.2-31.9c0.3-0.9,2.8-1.4,3.8-0.9l21.6,13.6l26.6-36.2c0,0,1.8-1.4,3.3-0.5
+	c1.5,1,1.2,3,1.2,3L55.4,65.7c-0.4,0.6-2.8,0.8-3.5,0.3c-7.1-4.4-21.1-13.2-21.1-13.2l-9.6,28.2C21.2,81.1,19.7,82.8,18,82.3z"/>
 </svg>
