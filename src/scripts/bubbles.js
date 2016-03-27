@@ -9,6 +9,16 @@
         force,
         w = 1800,
         $iframe,
+        nodesHidden = true,
+        nodePositions = [
+            [-200, -200],
+            [50, -200],
+            [200, 0],
+            [200, -200],
+            [100, 200],
+            [-50, 200],
+            [-200, 0]
+        ],
         nodeData = [
             {
                 "name":"Runningbyrd Tea Company",
@@ -31,7 +41,7 @@
                 "class": "grapher",
                 "pic":"assets/pics/line.svg",
                 "workURL": 'grapher/grapher.html',
-                "r": 50
+                "r": 60
             },
             {
                 "name":"Globetrotting",
@@ -68,7 +78,7 @@
             // so it always appears on top. svg objects respect
             // the DOM order instead of z-index
             {
-                "name":"Reade Lobdill Design",
+                // "name":"Reade Lobdill Design",
                 "class": "reade",
                 "pic":"assets/pics/logo.svg",
                 "fixed": true,
@@ -112,7 +122,7 @@
             .linkDistance(200)
             .size([$(window).width(), $(window).height()])
             .friction(0.7)
-            .gravity(0.001)
+            .gravity(0.1)
             .charge(-w*3)
             .on("tick", tick)
             .start();
@@ -130,6 +140,12 @@
             .enter().append("g")
             .attr("class", function(d) { return "node " + d.class; })
             .on("click", nodeClick)
+            .on('mouseover', function(d){
+                $('#work-title').text(d.name);
+            })
+            .on('mouseout', function(){
+                if(!$('#bubbles').hasClass('grouped') && !$('#bubbles').hasClass('transition')) $('#work-title').text('');
+            })
             .each(function(d){
                 var self = this;
                 d3.xml(d.pic, "image/svg+xml", function(xml) {
@@ -143,34 +159,52 @@
             .style("fill", "white")
             .attr("r", function(d) { return d.r; });
 
-        nodes.append("text")
-            .text(function(d) { return d.name; })
-            .attr("y", function(d){ return d.r + 15; })
-            .attr("x", function(d){
-                // must do boundingClientRect because firefox (and probably IE)
-                // has no idea what the width of an svg element is using $.width()
-                //TODO these are wrong sometimes?
-                return - this.getBoundingClientRect().width/2;
-            })
-            // kind of wonky but some clients need the element to be
-            // in the dom to get the width
-            .style('display', 'none');
+        force.stop();
+        nodes.transition()
+            .duration(0)
+            .attr("transform","translate(" + $(window).width()/2 + "," + $(window).height()/2 + ")");
 
 
         $(window).on('resize', _.debounce(onWindowResize, 100, true));
         // $('#more-tab').on('click', showHideMoreContent);
         hasher.init();
-        // showHideNodes();
+        $('.reade').on('mousedown', showHideNodes);
     });
 
     function showHideNodes(){
-        // d3.selectAll('.node')
-        //     .transition()
-        //     .duration(0)
-        //     .attr("transform","translate(" + $(window).width()/2 + "," + $(window).height()/2 + ")")
-        //     .each('end', function(d){
-        //         force.start();
-        //     });
+        if(!$('#bubbles').hasClass('grouped')){
+            var middleNode = force.nodes()[force.nodes().length - 1];
+                midX = middleNode.x,
+                midY = middleNode.y;
+                nodes = d3.selectAll('.node:not(.reade)');
+            if (nodesHidden){
+                nodes.transition()
+                    .duration(0)
+                    .each('end', function(d, i){
+                         d.x = (midX + nodePositions[i][0]);
+                         d.y = (midY + nodePositions[i][1]);
+                         force.resume();
+                     });
+                nodesHidden = false;
+            } else {
+                force.stop();
+                nodes.transition()
+                    .duration(500)
+                    .attr("transform",  function() {
+                        return "translate(" + midX + "," + midY + ")";
+                    });
+
+                d3.selectAll(".link")
+                    .transition()
+                    .duration(500)
+                    .attr("x1", function(d) { return midX; })
+                    .attr("y1", function(d) { return midY; })
+                    .attr("x2", function(d) { return midX; })
+                    .attr("y2", function(d) { return midY; });
+
+                nodesHidden = true;
+            }
+        }
     };
 
     function nodeClick(node){
@@ -230,42 +264,48 @@
     }
 
     function restartForces(){
-        $('#iframe').attr('src', 'about:blank');
+        $iframe.remove();
+        $iframe.attr('src', '');
+        $iframe.appendTo('body');
+        $iframe.css('background-image', '');
         $('#bubbles').removeClass('grouped').addClass('transition');
 
-        $('#more-content').empty();
-        $('#more-container').hide();
-        resetMoreContent();
+        // $('#more-content').empty();
+        // $('#more-container').hide();
+        // resetMoreContent();
 
         $('.social-link').hide();
-        $('#work-title').text(vis.select('.reade').data()[0].name);
+        $('#work-title').text('');
         $(window).on('resize', _.debounce(onWindowResize, 500, true));
 
         d3.select("#canvas").transition()
-            .duration(750)
+            .duration(0)
             .attr('height', $(window).height())
             .each('end', function(d){
-                $('#bubbles').removeClass('transition');
-                force.resume();
+                _.delay(function(){
+                    $('#bubbles').removeClass('transition');
+                    force.resume();
+                }, 750)
             });
 
-        var midHeight =  $(window).height()/2,
-            midWidth =  $(window).width()/2;
+        if(nodesHidden){
+            showHideNodes();
+        } else {
+            d3.selectAll(".node")
+                .transition()
+                .duration(750)
+                .attr("transform", function(d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
 
-        d3.selectAll(".node")
-            .transition()
-            .duration(750)
-            .attr("transform", function(d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
-
-        d3.selectAll(".link")
-            .transition()
-            .duration(750)
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
+            d3.selectAll(".link")
+                .transition()
+                .duration(750)
+                .attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+        }
     };
 
     function onWindowResize(){
@@ -292,8 +332,6 @@
             $('#more-content').text('').wrapInner('<p></p>');
         } else {
             resetMoreContent();
-
-
         }
     };
 

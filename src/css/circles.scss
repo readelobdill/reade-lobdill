@@ -15,10 +15,6 @@
 
 	g:hover:not(.reade){
 		cursor: pointer;
-
-		text{
-			display: inline !important;
-		}
 	}
 
 	&.grouped{
@@ -28,17 +24,6 @@
 
 		g:hover{
 			cursor: pointer;
-			text{
-				display: none !important;
-			}
-		}
-	}
-
-	&.transition{
-		g:hover{
-			text{
-				display: none !important;
-			}
 		}
 	}
 
