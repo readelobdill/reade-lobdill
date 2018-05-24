@@ -17,7 +17,8 @@
             [200, -200],
             [100, 200],
             [-50, 200],
-            [-200, 0]
+            [-200, 0],
+            [-150, 75]
         ],
         nodeData = [
             {
@@ -68,10 +69,19 @@
                 "r": 60
             },
             {
-                "name":"Coachseek",
-                "class": "coachseek",
-                "pic": "assets/pics/coachseek.svg",
-                "workURL": 'https://app-testing.coachseek.com/#/?showoff={"email":"russelsimmons@coachseek.com","password":"password"}',
+                "name":"Clickup",
+                "class": "clickup",
+                "pic": "assets/pics/clickup.svg",
+                "workURL": 'https://app.clickup.com',
+                "external": true,
+                "r": 60
+            },
+            {
+                "name":"UJET",
+                "class": "ujet",
+                "pic": "assets/pics/ujet.svg",
+                "workURL": 'https://ujet.co/demo/?demo_token=candidate-demo-token-GLbEAfleuI',
+                "external": true,
                 "r": 60
             },
             // Must keep main node on as last added to DOM
@@ -87,15 +97,16 @@
                 "y": $(window).height()/2
             }
         ],
-        linkData = [
-            {"source": 7, "target": 0},
-            {"source": 7, "target": 1},
-            {"source": 7, "target": 2},
-            {"source": 7, "target": 3},
-            {"source": 7, "target": 4},
-            {"source": 7, "target": 5},
-            {"source": 7, "target": 6}
-        ];
+        linkData = [];
+
+    for (var i = 0; i < nodeData.length - 1; i++){
+        linkData.push({
+            source: nodeData.length - 1,
+            target: parseFloat(i, 10)
+        });
+    }
+
+    console.log(linkData);
 
     // setup routes
     function onHashChange(newHash, oldHash){
@@ -208,10 +219,14 @@
     };
 
     function nodeClick(node){
-        // hasher.changed.active = false; //disable changed signal
-        hasher.setHash(node.class);
-        // hasher.changed.active = true; //re-enable signal
-        if(node.class !== "reade" && !$('#bubbles').hasClass('grouped')) showNodeDetails(node)
+        if (node.external) {
+            window.open(node.workURL, '_blank');
+        } else {
+            // hasher.changed.active = false; //disable changed signal
+            hasher.setHash(node.class);
+            // hasher.changed.active = true; //re-enable signal
+            if(node.class !== "reade" && !$('#bubbles').hasClass('grouped')) showNodeDetails(node)
+        }
     };
 
     function showNodeDetails(node){

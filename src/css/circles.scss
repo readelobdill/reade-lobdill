@@ -45,6 +45,18 @@
 			}
 		}
 
+		&.clickup, .clickup{
+			svg path{
+				fill: #7b68ee;
+			}
+		}
+
+		&.ujet, .ujet{
+			svg path.fill{
+				fill: #3498db;
+			}
+		}
+
 		&.rbt, .rbt{
 			svg{
 				fill: #00B4FF;
